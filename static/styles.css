@@ -1,0 +1,447 @@
+/* General Styles */
+body {
+    font-family: 'Helvetica', sans-serif;
+    color: #d0d0d0;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Header */
+header {
+    background-color: #2C3E50;
+    color: white;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo {
+    display: flex;
+    align-items: center;
+}
+
+header .logo .logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+header nav {
+    margin-left: auto;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a:hover {
+    color: #f39c12;
+}
+
+header nav ul li a.login {
+    border: 1px solid white;
+    padding: 8px 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li a.login:hover {
+    background-color: #f39c12;
+    border-color: #f39c12;
+    color: white;
+}
+
+header nav ul li a.cta {
+    background-color: #f39c12;
+    padding: 8px 18px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+header nav ul li a.cta:hover {
+    background-color: #e67e22;
+}
+
+/* Hero Section */
+.hero {
+    background: url('data/A_high-tech_abstract_background_representing_neura.webp') no-repeat center center/cover;
+    color: white;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero .container {
+    padding: 100px 0;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+.hero p {
+    font-size: 24px;
+    margin: 20px 0;
+}
+
+.hero .cta, .hero .secondary-cta {
+    display: inline-block;
+    margin: 20px 10px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #E74C3C;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.hero .secondary-cta {
+    background-color: #3498DB;
+}
+
+.hero .cta:hover {
+    background-color: #c0392b;
+}
+
+.hero .secondary-cta:hover {
+    background-color: #2980b9;
+}
+
+/* Features Section */
+.features {
+    background-color: #333;
+    padding: 50px 0;
+}
+
+.features .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: white;
+}
+
+.features .feature-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.features .card {
+    text-align: center;
+    width: 23%;
+    margin: 10px;
+    padding: 20px;
+    background-color: #444;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.features .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.features .card img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    filter: grayscale(100%) contrast(1) brightness(1.2);
+    transition: filter 0.3s ease;
+}
+
+.features .card img:hover {
+    filter: none;
+}
+
+.features .card h3 {
+    font-size: 24px;
+    margin: 20px 0;
+    color: white;
+}
+
+.features .card p {
+    font-size: 16px;
+    color: #ddd;
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding: 50px 0;
+}
+
+.how-it-works .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.how-it-works h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: white;
+}
+
+.how-it-works .steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.how-it-works .step {
+    text-align: center;
+    width: 23%;
+    margin: 20px;
+}
+
+.how-it-works .step img {
+    width: 100px;
+    height: 100px;
+}
+
+.how-it-works .step p {
+    font-size: 16px;
+    margin-top: 20px;
+    color: #ddd;
+}
+
+/* Pricing Section */
+.pricing {
+    background-color: #333;
+    padding: 50px 0;
+}
+
+.pricing .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pricing h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: white;
+}
+
+.pricing .pricing-tiers {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.pricing .tier {
+    text-align: center;
+    width: 30%;
+    background-color: #444;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing .tier:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.pricing .tier h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.pricing .tier .price {
+    font-size: 32px;
+    margin: 10px 0;
+    color: #f39c12;
+}
+
+.pricing .tier p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+.pricing .tier .cta {
+    background-color: #E74C3C;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.pricing .tier .cta:hover {
+    background-color: #c0392b;
+}
+
+/* Testimonials Section */
+.testimonials {
+    padding: 50px 0;
+}
+
+.testimonials .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.testimonials h2 {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 50px;
+    color: white;
+}
+
+.testimonials .testimonial-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.testimonials .card {
+    text-align: center;
+    width: 45%;
+    background-color: #444;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonials .card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.testimonials .card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.testimonials .card blockquote {
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+.testimonials .card p {
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Footer */
+footer {
+    background-color: #2C3E50;
+    color: white;
+    padding: 20px 0;
+}
+
+footer .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer .footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+footer .footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+}
+
+footer .social-media {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+footer .social-media a {
+    margin: 0 10px;
+}
+
+footer .social-media img {
+    width: 24px;
+    height: 24px;
+}
+
+footer .newsletter {
+    text-align: center;
+}
+
+footer .newsletter form {
+    display: inline-block;
+    margin-top: 10px;
+}
+
+footer .newsletter input[type="email"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #34495e;
+    color: #d0d0d0;
+}
+
+footer .newsletter button {
+    padding: 10px 20px;
+    background-color: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+footer .newsletter button:hover {
+    background-color: #c0392b;
+}

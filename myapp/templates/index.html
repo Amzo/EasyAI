@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyAI - Neural Network Builder</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">EasyAI</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}" class="login">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="login">Login</a></li>
+                        <li><a href="#" class="cta">Get Started</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'react_app' %}" class="cta">React App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" style="background: url('{% static 'A_high-tech_abstract_background_representing_neura.webp' %}') no-repeat center center/cover;">
+        <div class="container">
+            <h1>Create Neural Networks Visually</h1>
+            <p>Drag and drop layers, specify sizes, and build your custom neural networks with ease.</p>
+            <a href="#" class="cta">Get Started for Free</a>
+            <a href="#" class="secondary-cta">Watch Demo</a>
+        </div>
+    </section>
+
+<section class="features">
+    <div class="container">
+        <h2>Why Choose Us?</h2>
+        <div class="feature-cards">
+            <div class="card">
+                <img src="{% static 'icons/drag-and-drop.png' %}" alt="Drag and Drop Interface">
+                <h3>Intuitive Interface</h3>
+                <p>Easily design neural networks with our user-friendly, drag-and-drop interface.</p>
+            </div>
+            <div class="card">
+                <img src="{% static 'icons/customization.png' %}" alt="Customization">
+                <h3>Fully Customizable</h3>
+                <p>Customize layer types, sizes, and parameters to suit your specific needs.</p>
+            </div>
+            <div class="card">
+                <img src="{% static 'icons/integration.png' %}" alt="Integration">
+                <h3>Seamless Integration</h3>
+                <p>Export your models to popular frameworks like TensorFlow and PyTorch.</p>
+            </div>
+            <div class="card">
+                <img src="{% static 'icons/community.png' %}" alt="Community">
+                <h3>Supportive Community</h3>
+                <p>Join our community forums to get help and share your projects.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <img src="{% static 'images/step1.png' %}" alt="Drag Layer">
+                    <p>Drag and drop layers from the sidebar into the workspace.</p>
+                </div>
+                <div class="step">
+                    <img src="{% static 'images/step2.png' %}" alt="Configure Layer">
+                    <p>Specify the size, activation function, and other parameters.</p>
+                </div>
+                <div class="step">
+                    <img src="{% static 'images/step3.png' %}" alt="Connect Layers">
+                    <p>Connect layers to form a complete neural network.</p>
+                </div>
+                <div class="step">
+                    <img src="{% static 'images/step4.png' %}" alt="Export Model">
+                    <p>Export your model to your preferred framework and start training.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <h2>Choose Your Plan</h2>
+            <div class="pricing-tiers">
+                <div class="tier">
+                    <h3>Free Plan</h3>
+                    <p class="price">£0/month</p>
+                    <p>Basic drag-and-drop interface, limited layers, community support</p>
+                    <a href="#" class="cta">Get Started</a>
+                </div>
+                <div class="tier">
+                    <h3>Pro Plan</h3>
+                    <p class="price">£29/month</p>
+                    <p>All free features, unlimited layers, advanced customization, priority support</p>
+                    <a href="#" class="cta">Upgrade Now</a>
+                </div>
+                <div class="tier">
+                    <h3>Enterprise Plan</h3>
+                    <p class="price">Custom pricing</p>
+                    <p>All pro features, team collaboration, dedicated support, custom solutions</p>
+                    <a href="#" class="cta">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-cards">
+                <div class="card">
+                    <img src="images/user1.jpg" alt="John Doe">
+                    <blockquote>"This platform made it incredibly easy to design complex neural networks!"</blockquote>
+                    <p>John Doe, Data Scientist</p>
+                </div>
+                <div class="card">
+                    <img src="images/user2.jpg" alt="Jane Smith">
+                    <blockquote>"The drag-and-drop feature is a game-changer. Highly recommend!"</blockquote>
+                    <p>Jane Smith, AI Researcher</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="social-media">
+                <a href="#"><img src="icons/facebook.png" alt="Facebook"></a>
+                <a href="#"><img src="icons/twitter.png" alt="Twitter"></a>
+                <a href="#"><img src="icons/linkedin.png" alt="LinkedIn"></a>
+                <a href="#"><img src="icons/instagram.png" alt="Instagram"></a>
+            </div>
+            <div class="newsletter">
+                <p>Subscribe to our newsletter for the latest updates.</p>
+                <form>
+                    <input type="email" placeholder="Your email">
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

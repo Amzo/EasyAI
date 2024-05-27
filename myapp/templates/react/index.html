@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="{% static 'react/static/css/main.css' %}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <span class="logo-text">EasyAI</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}" class="login">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="login">Login</a></li>
+                        <li><a href="#" class="cta">Get Started</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'react_app' %}" class="cta">React App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div id="root"></div>
+    <script src="{% static 'react/static/js/main.93b46524.js' %}"></script>
+</body>
+</html>
