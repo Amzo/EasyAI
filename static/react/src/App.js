@@ -5,7 +5,6 @@ import Workspace from './components/Workspace';
 import ConfigSidebar from './components/ConfigSidebar';
 import InputTypeBox from './components/InputTypeBox';
 import './App.css';
-import useFetchLayers from './hooks/useFetchLayers';
 import { handleDragEnd } from './utils/dragAndDropHelper';
 import { handleItemClick, handleDelete } from './utils/itemHandlers';
 import { generatePythonCode, downloadPythonFile } from './components/codeGenerator';
@@ -32,7 +31,7 @@ const inputItems = [
 ];
 
 function App() {
-    const sidebarItems = useFetchLayers(initialItems);
+    const [sidebarItems] = useState(initialItems);
     const [workspaceItems, setWorkspaceItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [inputTypeItems] = useState(inputItems);
