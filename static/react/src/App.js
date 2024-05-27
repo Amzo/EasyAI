@@ -1,12 +1,13 @@
-// App.js
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Sidebar from './components/Sidebar';
 import Workspace from './components/Workspace';
 import ConfigSidebar from './components/ConfigSidebar';
 import InputTypeBox from './components/InputTypeBox';
 import './App.css';
-import axios from 'axios';
+import useFetchLayers from './hooks/useFetchLayers';
+import { handleDragEnd } from './utils/dragAndDropHelper';
+import { handleItemClick, handleDelete } from './utils/itemHandlers';
 import { generatePythonCode, downloadPythonFile } from './components/codeGenerator';
 
 const initialItems = [
@@ -31,48 +32,13 @@ const inputItems = [
 ];
 
 function App() {
-    const [sidebarItems, setSidebarItems] = useState(initialItems);
+    const sidebarItems = useFetchLayers(initialItems);
     const [workspaceItems, setWorkspaceItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [inputTypeItems, setInputTypeItems] = useState(inputItems);
-
-    useEffect(() => {
-        axios.get('/api/layers/')
-            .then(response => {
-                if (response.data && response.data.length > 0) {
-                    setSidebarItems(response.data);
-                }
-            })
-            .catch(error => {
-                console.error("There was an error fetching the layers!", error);
-            });
-    }, []);
+    const [inputTypeItems] = useState(inputItems);
 
     const onDragEnd = (result) => {
-        const { source, destination } = result;
-
-        if (!destination) return;
-
-        let items;
-        if (source.droppableId === 'inputBox' && destination.droppableId === 'workspace') {
-            items = inputTypeItems;
-        } else if (source.droppableId === 'sidebar' && destination.droppableId === 'workspace') {
-            items = sidebarItems;
-        } else {
-            return;
-        }
-
-        const item = items[source.index];
-        setWorkspaceItems([...workspaceItems, item]);
-    };
-
-    const handleItemClick = (item) => {
-        setSelectedItem(item);
-    };
-
-    const handleDelete = (item) => {
-        setWorkspaceItems(workspaceItems.filter(workspaceItem => workspaceItem.id !== item.id));
-        setSelectedItem(null);
+        handleDragEnd(result, inputTypeItems, sidebarItems, workspaceItems, setWorkspaceItems);
     };
 
     const handleExport = () => {
@@ -91,8 +57,8 @@ function App() {
                         <InputTypeBox items={inputTypeItems} />
                         <Sidebar items={sidebarItems} />
                     </div>
-                    <Workspace items={workspaceItems} onItemClick={handleItemClick} />
-                    {selectedItem && <ConfigSidebar item={selectedItem} onDelete={handleDelete} />}
+                    <Workspace items={workspaceItems} onItemClick={(item) => handleItemClick(item, setSelectedItem)} />
+                    {selectedItem && <ConfigSidebar item={selectedItem} onDelete={(item) => handleDelete(item, workspaceItems, setWorkspaceItems, setSelectedItem)} />}
                 </div>
                 <button onClick={handleExport}>Export to TensorFlow</button>
             </div>
