@@ -94,23 +94,35 @@ const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnec
       onClick={() => onSelect(item.id)}
       onMouseDown={handleMouseDown}
     >
-      {item.name}
+      <table>
+        <tbody>
+          <tr>
+            <td>Layer {item.id}</td>
+          </tr>
+          <tr>
+            <td><hr /></td>
+          </tr>
+          <tr>
+            <td>{item.name}</td>
+          </tr>
+        </tbody>
+      </table>
       {(selected || showConnectionPoints) && (
         <div>
           <div
-            style={{ ...pointStyle, top: '-15px', left: `${dimensions.width / 2}px`, transform: 'translate(-50%, -50%)' }}
+            style={{ ...pointStyle, top: '-10px', left: `${dimensions.width / 2 - 5}px`, transform: 'translate(-50%, -50%)' }}
             onMouseDown={handleConnectionMouseDown('top')}
           />
           <div
-            style={{ ...pointStyle, top: `${dimensions.height / 2}px`, right: '-15px', transform: 'translate(50%, -50%)' }}
+            style={{ ...pointStyle, top: `${dimensions.height / 2 - 5}px`, right: '-10px', transform: 'translate(50%, -50%)' }}
             onMouseDown={handleConnectionMouseDown('right')}
           />
           <div
-            style={{ ...pointStyle, bottom: '-15px', left: `${dimensions.width / 2}px`, transform: 'translate(-50%, 50%)' }}
+            style={{ ...pointStyle, bottom: '-10px', left: `${dimensions.width / 2 - 5}px`, transform: 'translate(-50%, 50%)' }}
             onMouseDown={handleConnectionMouseDown('bottom')}
           />
           <div
-            style={{ ...pointStyle, top: `${dimensions.height / 2}px`, left: '-15px', transform: 'translate(-50%, -50%)' }}
+            style={{ ...pointStyle, top: `${dimensions.height / 2 - 5}px`, left: '-10px', transform: 'translate(-50%, -50%)' }}
             onMouseDown={handleConnectionMouseDown('left')}
           />
         </div>

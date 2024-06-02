@@ -31,7 +31,7 @@ body, html {
   background-color: white;
   background-image: radial-gradient(black 1px, transparent 1px);
   background-size: 10px 10px;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .workspace-content {
@@ -96,4 +96,4 @@ body, html {
 
 .toolbox-item i, .properties-item i {
   margin-right: 10px;
- }
+}

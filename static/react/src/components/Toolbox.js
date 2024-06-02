@@ -20,21 +20,21 @@ const ToolboxItem = ({ name, type, icon }) => {
   }));
 
   return (
-    <ListItem button ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
-      <ListItemIcon>{icon}</ListItemIcon>
-      <ListItemText primary={name} />
+    <ListItem button ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }} className="toolbox-item">
+      <ListItemIcon className="toolbox-icon">{icon}</ListItemIcon>
+      <ListItemText primary={name} className="toolbox-text" />
     </ListItem>
   );
 };
 
 const Toolbox = () => {
   return (
-    <div>
-      <h3>Toolbox</h3>
+    <div id="toolbox">
+      <h3 className="toolbox-title">Toolbox</h3>
       <Divider />
       <List component="nav">
         <ListItem>
-          <ListItemText primary="Inputs" />
+          <ListItemText primary="Inputs" className="toolbox-category" />
         </ListItem>
         <ToolboxItem name="Audio Input" type="audio" icon={<AudiotrackIcon />} />
         <ToolboxItem name="Video Input" type="video" icon={<VideocamIcon />} />
@@ -42,7 +42,7 @@ const Toolbox = () => {
       <Divider />
       <List component="nav">
         <ListItem>
-          <ListItemText primary="Layers" />
+          <ListItemText primary="Layers" className="toolbox-category" />
         </ListItem>
         <ToolboxItem name="Dense" type="dense" icon={<LayersIcon />} />
         <ToolboxItem name="CNN" type="cnn" icon={<BlurOnIcon />} />

@@ -3,8 +3,8 @@ import { useDrop } from 'react-dnd';
 import { ItemType } from '../ItemType';
 import DraggableItem from './DraggableItem';
 import ConnectionManager from './ConnectionManager';
-import RibbonBar from './RibbonBar'; // Import RibbonBar component
-import './Workspace.css'; // Import the CSS file
+import RibbonBar from './RibbonBar';
+import './Workspace.css';
 
 const Workspace = ({ items, connections, onItemsChange, onConnectionsChange, onSelectItem }) => {
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -41,11 +41,11 @@ const Workspace = ({ items, connections, onItemsChange, onConnectionsChange, onS
       if (item.id === undefined) {
         onItemsChange([
           ...items,
-          { ...item, left: x, top: y, id: items.length, dimensions: item.dimensions },
+          { ...item, left: x, top: y, id: items.length, dimensions: { width: 100, height: 50 } }, // Example dimensions
         ]);
       } else {
         onItemsChange(items.map((prevItem) =>
-          prevItem.id === item.id ? { ...prevItem, left: x, top: y, dimensions: item.dimensions } : prevItem
+          prevItem.id === item.id ? { ...prevItem, left: x, top: y, dimensions: prevItem.dimensions || { width: 100, height: 50 } } : prevItem
         ));
       }
     },

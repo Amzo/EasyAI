@@ -20,6 +20,14 @@ const App = () => {
     setConnections(newConnections);
   };
 
+  const handleDeleteItem = (id) => {
+    const newItems = items.filter(item => item.id !== id);
+    const newConnections = connections.filter(connection => connection.fromId !== id && connection.toId !== id);
+    setItems(newItems);
+    setConnections(newConnections);
+    setSelectedItem(null);
+  };
+
   return (
     <div style={{ display: 'flex', height: '100vh' }}>
       <div style={{ width: '20%', borderRight: '1px solid black' }}>
@@ -35,7 +43,13 @@ const App = () => {
         />
       </div>
       <div style={{ width: '20%', borderLeft: '1px solid black' }}>
-        <PropertiesPanel selectedItem={selectedItem} />
+        <PropertiesPanel
+          selectedItem={selectedItem}
+          items={items}
+          connections={connections}
+          onConnectionsChange={handleConnectionsChange}
+          onDeleteItem={handleDeleteItem}
+        />
       </div>
     </div>
   );
