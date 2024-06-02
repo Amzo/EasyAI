@@ -1,68 +1,44 @@
 import React, { useState } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
-import Sidebar from './components/Sidebar';
+import Toolbox from './components/Toolbox';
 import Workspace from './components/Workspace';
-import ConfigSidebar from './components/ConfigSidebar';
-import InputTypeBox from './components/InputTypeBox';
-import './App.css';
-import { handleDragEnd } from './utils/dragAndDropHelper';
-import { handleItemClick, handleDelete } from './utils/itemHandlers';
-import { generatePythonCode, downloadPythonFile } from './components/codeGenerator';
+import PropertiesPanel from './components/PropertiesPanel';
 
-const initialItems = [
-    { id: '1', content: 'Dense Layer' },
-    { id: '2', content: 'Dropout Layer' },
-    { id: '3', content: 'Convolutional Layer' },
-    { id: '4', content: 'Pooling Layer' },
-    { id: '5', content: 'Recurrent Layer' },
-    { id: '6', content: 'Batch Normalization Layer' },
-    { id: '7', content: 'Flatten Layer' },
-    { id: '8', content: 'Embedding Layer' },
-    { id: '9', content: 'Activation Layer' },
-];
+const App = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [items, setItems] = useState([]);
+  const [connections, setConnections] = useState([]);
 
-const inputItems = [
-    { id: '10', content: 'Audio Input' },
-    { id: '11', content: 'Image Input' },
-    { id: '12', content: 'Text Input' },
-    { id: '13', content: 'Video Input' },
-    { id: '14', content: '3D Image Input' },
-    { id: '15', content: 'Time Series Input' },
-];
+  const handleSelectItem = (item) => {
+    setSelectedItem(item);
+  };
 
-function App() {
-    const [sidebarItems] = useState(initialItems);
-    const [workspaceItems, setWorkspaceItems] = useState([]);
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [inputTypeItems] = useState(inputItems);
+  const handleItemsChange = (newItems) => {
+    setItems(newItems);
+  };
 
-    const onDragEnd = (result) => {
-        handleDragEnd(result, inputTypeItems, sidebarItems, workspaceItems, setWorkspaceItems);
-    };
+  const handleConnectionsChange = (newConnections) => {
+    setConnections(newConnections);
+  };
 
-    const handleExport = () => {
-        const pythonCode = generatePythonCode(workspaceItems);
-        downloadPythonFile(pythonCode);
-    };
-
-    return (
-        <DragDropContext onDragEnd={onDragEnd}>
-            <div className="App">
-                <header className="App-header">
-                    <h1>EasyAI Network Builder</h1>
-                </header>
-                <div className="container">
-                    <div className="sidebar-container">
-                        <InputTypeBox items={inputTypeItems} />
-                        <Sidebar items={sidebarItems} />
-                    </div>
-                    <Workspace items={workspaceItems} onItemClick={(item) => handleItemClick(item, setSelectedItem)} />
-                    {selectedItem && <ConfigSidebar item={selectedItem} onDelete={(item) => handleDelete(item, workspaceItems, setWorkspaceItems, setSelectedItem)} />}
-                </div>
-                <button onClick={handleExport}>Export to TensorFlow</button>
-            </div>
-        </DragDropContext>
-    );
-}
+  return (
+    <div style={{ display: 'flex', height: '100vh' }}>
+      <div style={{ width: '20%', borderRight: '1px solid black' }}>
+        <Toolbox />
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '60%' }}>
+        <Workspace
+          items={items}
+          connections={connections}
+          onItemsChange={handleItemsChange}
+          onConnectionsChange={handleConnectionsChange}
+          onSelectItem={handleSelectItem}
+        />
+      </div>
+      <div style={{ width: '20%', borderLeft: '1px solid black' }}>
+        <PropertiesPanel selectedItem={selectedItem} />
+      </div>
+    </div>
+  );
+};
 
 export default App;
