@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Toolbox from './components/Toolbox';
-import Workspace from './components/Workspace';
+import Workspace from './components/workspace/Workspace';
 import PropertiesPanel from './components/PropertiesPanel';
 import { saveAs } from 'file-saver';
 
