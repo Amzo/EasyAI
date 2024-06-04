@@ -13,11 +13,15 @@ const App = () => {
   };
 
   const handleItemsChange = (newItems) => {
-    setItems(newItems);
+    if (items !== newItems) {
+      setItems(newItems);
+    }
   };
 
   const handleConnectionsChange = (newConnections) => {
-    setConnections(newConnections);
+    if (connections !== newConnections) {
+      setConnections(newConnections);
+    }
   };
 
   const handleDeleteItem = (id) => {

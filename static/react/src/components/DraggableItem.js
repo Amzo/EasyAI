@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
-const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnectionPoints, onMove, zoom }) => {
+const DraggableItem = ({ item, selected, onSelect, onMove, onUpdateDimensions, zoom }) => {
   const ref = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [dragging, setDragging] = useState(false);
@@ -8,12 +8,16 @@ const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnec
 
   useEffect(() => {
     if (ref.current) {
-      setDimensions({
+      const newDimensions = {
         width: ref.current.offsetWidth,
         height: ref.current.offsetHeight,
-      });
+      };
+      setDimensions(newDimensions);
+      if (item.dimensions.width !== newDimensions.width || item.dimensions.height !== newDimensions.height) {
+        onUpdateDimensions(item.id, newDimensions);
+      }
     }
-  }, [item]);
+  }, [item, onUpdateDimensions, zoom]);
 
   const handleMouseDown = (e) => {
     const rect = ref.current.getBoundingClientRect();
@@ -31,10 +35,8 @@ const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnec
       const newX = (e.clientX - offset.x - workspace.left) / zoom;
       const newY = (e.clientY - offset.y - workspace.top) / zoom;
 
-      // Ensure the item stays within the workspace bounds
-      const left = Math.max(0, Math.min(newX, workspace.width - dimensions.width));
-      const top = Math.max(0, Math.min(newY, workspace.height - dimensions.height));
-
+      const left = Math.max(0, Math.min(newX, workspace.width / zoom - dimensions.width));
+      const top = Math.max(0, Math.min(newY, workspace.height / zoom - dimensions.height));
       onMove(item.id, left, top);
     }
   }, [dragging, offset, dimensions.width, dimensions.height, onMove, item.id, zoom]);
@@ -58,15 +60,10 @@ const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnec
     };
   }, [dragging, handleMouseMove, handleMouseUp]);
 
-  const handleConnectionMouseDown = (position) => (e) => {
-    e.stopPropagation();
-    onStartConnection(item.id, position, dimensions);
-  };
-
   const style = {
     position: 'absolute',
-    left: item.left,
-    top: item.top,
+    left: item.left * zoom,
+    top: item.top * zoom,
     backgroundColor: 'white',
     border: '2px solid black',
     padding: '10px',
@@ -75,16 +72,6 @@ const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnec
     transition: 'background-color 0.2s',
     transform: `scale(${zoom})`,
     transformOrigin: '0 0'
-  };
-
-  const pointStyle = {
-    position: 'absolute',
-    width: '10px',
-    height: '10px',
-    backgroundColor: 'white',
-    border: '1px solid black',
-    cursor: 'pointer',
-    zIndex: 10,
   };
 
   return (
@@ -107,26 +94,6 @@ const DraggableItem = ({ item, selected, onSelect, onStartConnection, showConnec
           </tr>
         </tbody>
       </table>
-      {(selected || showConnectionPoints) && (
-        <div>
-          <div
-            style={{ ...pointStyle, top: '-10px', left: `${dimensions.width / 2 - 5}px`, transform: 'translate(-50%, -50%)' }}
-            onMouseDown={handleConnectionMouseDown('top')}
-          />
-          <div
-            style={{ ...pointStyle, top: `${dimensions.height / 2 - 5}px`, right: '-10px', transform: 'translate(50%, -50%)' }}
-            onMouseDown={handleConnectionMouseDown('right')}
-          />
-          <div
-            style={{ ...pointStyle, bottom: '-10px', left: `${dimensions.width / 2 - 5}px`, transform: 'translate(-50%, 50%)' }}
-            onMouseDown={handleConnectionMouseDown('bottom')}
-          />
-          <div
-            style={{ ...pointStyle, top: `${dimensions.height / 2 - 5}px`, left: '-10px', transform: 'translate(-50%, -50%)' }}
-            onMouseDown={handleConnectionMouseDown('left')}
-          />
-        </div>
-      )}
     </div>
   );
 };
