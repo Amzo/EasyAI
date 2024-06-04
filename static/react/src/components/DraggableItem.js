@@ -32,8 +32,8 @@ const DraggableItem = ({ item, selected, onSelect, onMove, onUpdateDimensions, z
   const handleMouseMove = useCallback((e) => {
     if (dragging) {
       const workspace = document.querySelector('.workspace').getBoundingClientRect();
-      const newX = (e.clientX - offset.x - workspace.left) / zoom;
-      const newY = (e.clientY - offset.y - workspace.top) / zoom;
+      const newX = (e.clientX - offset.x * zoom - workspace.left) / zoom;
+      const newY = (e.clientY - offset.y * zoom - workspace.top) / zoom;
 
       const left = Math.max(0, Math.min(newX, workspace.width / zoom - dimensions.width));
       const top = Math.max(0, Math.min(newY, workspace.height / zoom - dimensions.height));

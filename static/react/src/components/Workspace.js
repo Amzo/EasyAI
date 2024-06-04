@@ -6,7 +6,7 @@ import ConnectionManager from './ConnectionManager';
 import RibbonBar from './RibbonBar';
 import './Workspace.css';
 
-const Workspace = ({ items, connections, onItemsChange, onConnectionsChange, onSelectItem }) => {
+const Workspace = ({ items, connections, onItemsChange, onConnectionsChange, onSelectItem, onSave, onLoad }) => {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [draggingConnection, setDraggingConnection] = useState(null);
   const [zoom, setZoom] = useState(1);
@@ -31,31 +31,31 @@ const Workspace = ({ items, connections, onItemsChange, onConnectionsChange, onS
     };
   }, []);
 
-    const updateItemDimensions = (id, dimensions) => {
-      onItemsChange(items.map((item) =>
-        item.id === id ? { ...item, dimensions } : item
-      ));
-    };
+  const updateItemDimensions = (id, dimensions) => {
+    onItemsChange(items.map((item) =>
+      item.id === id ? { ...item, dimensions } : item
+    ));
+  };
 
-const [, drop] = useDrop({
-  accept: ItemType.LAYER,
-  drop: (item, monitor) => {
-    const offset = monitor.getClientOffset();
-    const workspaceRect = workspaceRef.current.getBoundingClientRect();
-    const x = (offset.x - workspaceRect.left) / zoom;
-    const y = (offset.y - workspaceRect.top) / zoom;
-    if (item.id === undefined) {
-      onItemsChange([
-        ...items,
-        { ...item, left: x, top: y, id: items.length, dimensions: { width: 0, height: 0 } }, // Set initial dimensions to 0
-      ]);
-    } else {
-      onItemsChange(items.map((prevItem) =>
-        prevItem.id === item.id ? { ...prevItem, left: x, top: y, dimensions: prevItem.dimensions } : prevItem
-      ));
-    }
-  },
-});
+  const [, drop] = useDrop({
+    accept: ItemType.LAYER,
+    drop: (item, monitor) => {
+      const offset = monitor.getClientOffset();
+      const workspaceRect = workspaceRef.current.getBoundingClientRect();
+      const x = (offset.x - workspaceRect.left) / zoom;
+      const y = (offset.y - workspaceRect.top) / zoom;
+      if (item.id === undefined) {
+        onItemsChange([
+          ...items,
+          { ...item, left: x, top: y, id: items.length, dimensions: { width: 0, height: 0 } },
+        ]);
+      } else {
+        onItemsChange(items.map((prevItem) =>
+          prevItem.id === item.id ? { ...prevItem, left: x, top: y, dimensions: prevItem.dimensions } : prevItem
+        ));
+      }
+    },
+  });
 
   const moveItem = (id, left, top) => {
     onItemsChange(items.map((item) =>
@@ -76,40 +76,38 @@ const [, drop] = useDrop({
       <RibbonBar
         onZoomIn={handleZoomIn}
         onZoomOut={handleZoomOut}
+        onSave={onSave}
+        onLoad={onLoad}
       />
-      <div
-        style={{ display: 'flex', height: '100%' }}
-      >
+      <div style={{ display: 'flex', height: '100%' }}>
         <div
           className="workspace"
           ref={workspaceRef}
-          style={{ overflow: zoom > 1 ? 'auto' : 'hidden', flexGrow: 1 }} // Enable scrollbars when zoomed in
+          style={{ overflow: zoom > 1 ? 'auto' : 'hidden', flexGrow: 1 }}
         >
           <div className="workspace-content" style={{ transform: `scale(${zoom})`, transformOrigin: '0 0' }}>
-
-          <div ref={drop} style={{ width: '100%', height: '100%' }}>
-            {items.map((item) => (
-              <div key={item.id} onClick={() => {
-                onSelectItem(item);
-                setSelectedItemId(item.id);
-              }}>
-                <DraggableItem
-                  item={item}
-                  selected={item.id === selectedItemId}
-                  onSelect={onSelectItem}
-                  onMove={moveItem}
-                  onUpdateDimensions={updateItemDimensions} // Pass the update function
-                  zoom={zoom}
-                />
-              </div>
-            ))}
-          </div>
-
+            <div ref={drop} style={{ width: '100%', height: '100%' }}>
+              {items.map((item) => (
+                <div key={item.id} onClick={() => {
+                  onSelectItem(item);
+                  setSelectedItemId(item.id);
+                }}>
+                  <DraggableItem
+                    item={item}
+                    selected={item.id === selectedItemId}
+                    onSelect={onSelectItem}
+                    onMove={moveItem}
+                    onUpdateDimensions={updateItemDimensions}
+                    zoom={zoom}
+                  />
+                </div>
+              ))}
+            </div>
             <ConnectionManager
               items={items}
               connections={connections}
               draggingConnection={draggingConnection}
-              zoom={zoom} // Pass the zoom level
+              zoom={zoom}
             />
           </div>
         </div>

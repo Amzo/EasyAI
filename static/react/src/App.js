@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Toolbox from './components/Toolbox';
 import Workspace from './components/Workspace';
 import PropertiesPanel from './components/PropertiesPanel';
+import { saveAs } from 'file-saver';
 
 const App = () => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -13,15 +14,11 @@ const App = () => {
   };
 
   const handleItemsChange = (newItems) => {
-    if (items !== newItems) {
-      setItems(newItems);
-    }
+    setItems(newItems);
   };
 
   const handleConnectionsChange = (newConnections) => {
-    if (connections !== newConnections) {
-      setConnections(newConnections);
-    }
+    setConnections(newConnections);
   };
 
   const handleDeleteItem = (id) => {
@@ -30,6 +27,27 @@ const App = () => {
     setItems(newItems);
     setConnections(newConnections);
     setSelectedItem(null);
+  };
+
+  const handleSave = () => {
+    const workspaceState = { items, connections };
+    const blob = new Blob([JSON.stringify(workspaceState)], { type: 'application/json' });
+    saveAs(blob, 'workspace.json');
+  };
+
+  const handleLoad = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const workspaceState = JSON.parse(e.target.result);
+        setItems(workspaceState.items);
+        setConnections(workspaceState.connections);
+        console.log('Loaded items:', workspaceState.items);  // Debug log
+        console.log('Loaded connections:', workspaceState.connections);  // Debug log
+      };
+      reader.readAsText(file);
+    }
   };
 
   return (
@@ -44,6 +62,8 @@ const App = () => {
           onItemsChange={handleItemsChange}
           onConnectionsChange={handleConnectionsChange}
           onSelectItem={handleSelectItem}
+          onSave={handleSave}
+          onLoad={handleLoad}
         />
       </div>
       <div style={{ width: '20%', borderLeft: '1px solid black' }}>
