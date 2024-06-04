@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Toolbox from './components/Toolbox';
 import Workspace from './components/Workspace';
 import PropertiesPanel from './components/PropertiesPanel';
@@ -8,6 +8,20 @@ const App = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [items, setItems] = useState([]);
   const [connections, setConnections] = useState([]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Delete' && selectedItem) {
+        handleDeleteItem(selectedItem.id);
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedItem]);
 
   const handleSelectItem = (item) => {
     setSelectedItem(item);
@@ -31,7 +45,7 @@ const App = () => {
 
   const handleSave = () => {
     const workspaceState = { items, connections };
-    const blob = new Blob([JSON.stringify(workspaceState)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(workspaceState, null, 2)], { type: 'application/json' });
     saveAs(blob, 'workspace.json');
   };
 
