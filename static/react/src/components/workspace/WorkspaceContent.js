@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { ItemType } from '../../ItemType';
-import DraggableItem from '../DraggableItem';
+import DraggableItem from '../items/DraggableItem';
 import ConnectionManager from '../ConnectionManager';
 import DropZone from './DropZone';
 

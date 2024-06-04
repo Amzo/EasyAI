@@ -1,49 +1,16 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+import useDraggable from './useDraggable';
+import useDimensions from './useDimensions';
 
 const DraggableItem = ({ item, selected, onSelect, onMove, onUpdateDimensions, zoom }) => {
   const ref = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const [dragging, setDragging] = useState(false);
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const { dragging, handleMouseDown, handleMouseMove, handleMouseUp } = useDraggable(ref, zoom, dimensions, item, onMove);
+  const { updateDimensions } = useDimensions(ref, item, onUpdateDimensions, zoom, setDimensions);
 
   useEffect(() => {
-    if (ref.current) {
-      const newDimensions = {
-        width: ref.current.offsetWidth,
-        height: ref.current.offsetHeight,
-      };
-      setDimensions(newDimensions);
-      if (item.dimensions.width !== newDimensions.width || item.dimensions.height !== newDimensions.height) {
-        onUpdateDimensions(item.id, newDimensions);
-      }
-    }
-  }, [item, onUpdateDimensions, zoom]);
-
-  const handleMouseDown = (e) => {
-    const rect = ref.current.getBoundingClientRect();
-    setOffset({
-      x: (e.clientX - rect.left) / zoom,
-      y: (e.clientY - rect.top) / zoom,
-    });
-    setDragging(true);
-    e.stopPropagation();
-  };
-
-  const handleMouseMove = useCallback((e) => {
-    if (dragging) {
-      const workspace = document.querySelector('.workspace').getBoundingClientRect();
-      const newX = (e.clientX - offset.x * zoom - workspace.left) / zoom;
-      const newY = (e.clientY - offset.y * zoom - workspace.top) / zoom;
-
-      const left = Math.max(0, Math.min(newX, workspace.width / zoom - dimensions.width));
-      const top = Math.max(0, Math.min(newY, workspace.height / zoom - dimensions.height));
-      onMove(item.id, left, top);
-    }
-  }, [dragging, offset, dimensions.width, dimensions.height, onMove, item.id, zoom]);
-
-  const handleMouseUp = useCallback(() => {
-    setDragging(false);
-  }, []);
+    updateDimensions();
+  }, [item, onUpdateDimensions, zoom, updateDimensions]);
 
   useEffect(() => {
     if (dragging) {
